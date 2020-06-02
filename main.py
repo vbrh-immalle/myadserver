@@ -1,4 +1,4 @@
-from flask import Flask, url_for, g, render_template, send_file
+from flask import Flask, url_for, g, render_template, redirect
 from db import Db
 import db
 import viewmodels
@@ -53,9 +53,20 @@ def adserv(reseller_id, ad_id):
         afbeelding_data = f.read()
     b64_afbeelding_data = base64.b64encode(afbeelding_data)
     
-    #get_db().update_views(reseller_ad_id)
+    get_db().update_views(reseller_id, ad_id)
 
-    return f"<a href='{ad.link}'><img src='data:image/png;base64, {str(b64_afbeelding_data, 'utf-8')}'></a>"
+    return f"<a href='{url_for('adservclick', reseller_id=reseller_id, ad_id=ad_id)}'><img src='data:image/png;base64, {str(b64_afbeelding_data, 'utf-8')}'></a>"
+
+@app.route('/adservclick/<int:reseller_id>/<int:ad_id>')
+def adservclick(reseller_id, ad_id):
+    try:
+        ad = get_db().get_ad_from(reseller_id, ad_id)
+    except:
+        return 'Not found', 404
+    
+    get_db().update_clicks(reseller_id, ad_id)
+
+    return redirect(ad.link, 301)
 
 @app.route('/adservtest/<int:reseller_id>/<int:ad_id>')
 def adservtest(reseller_id, ad_id):
