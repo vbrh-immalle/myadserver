@@ -47,19 +47,15 @@ def adserv(reseller_id, ad_id):
         print(f'adserv: Ad {ad_id} not found for {reseller_id}.')
         ad = viewmodels.Ad(0, 'placeholder.png', '')
     
-    # afbeelding_path = f'./static/{filename=ad.afbeelding}'
-    # afbeelding_data = ''
-    # with open(afbeelding_path) as f:
-    #     afbeelding_data = f.read()
-    # b64_afbeelding_data = base64.b64encode(afbeelding_data)
+    afbeelding_path = f'static/{ad.afbeelding}'
+    afbeelding_data = ''
+    with open(afbeelding_path, 'rb') as f:
+        afbeelding_data = f.read()
+    b64_afbeelding_data = base64.b64encode(afbeelding_data)
     
-    # return f"<a href='{ad.link}'><img src='data:image/png;base64, {b64_afbeelding_data}'></a>"
-
     #get_db().update_views(reseller_ad_id)
-    return url_for('static', filename=ad.afbeelding, _external=True)
-    #return send_file(url_for('static', filename=ad.afbeelding), mimetype='image/png')
-    #return send_file('/static/placeholder.png', mimetype='image/png')
-    #return send_static_file('placeholder.png')
+
+    return f"<a href='{ad.link}'><img src='data:image/png;base64, {str(b64_afbeelding_data, 'utf-8')}'></a>"
 
 @app.route('/adservtest/<int:reseller_id>/<int:ad_id>')
 def adservtest(reseller_id, ad_id):
