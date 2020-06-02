@@ -68,11 +68,5 @@ def adservclick(reseller_id, ad_id):
 
     return redirect(ad.link, 301)
 
-@app.route('/adservtest/<int:reseller_id>/<int:ad_id>')
-def adservtest(reseller_id, ad_id):
-    return f"<h2>Test</h2><img src='http://localhost:8080/adserv/{reseller_id}/{ad_id}'>"
-
-
-
 
 app.run(host='127.0.0.1', port='8080', debug=True)
