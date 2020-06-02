@@ -1,0 +1,22 @@
+<h1>CEO view</h1>
+
+<table>
+    <tr>
+        <th>reseller</th>
+        <th>afbeelding</th>
+        <th>link</th>
+        <th>views</th>
+        <th>clicks</th>
+        <th>CTR</th>
+    </tr>
+    {% for item in lines %}
+    <tr>
+        <td>{{item.reseller}}</td>
+        <td>{{item.afbeelding}}</td>
+        <td>{{item.link}}</td>
+        <td>{{item.aantal_views}}</td>
+        <td>{{item.aantal_clicks}}</td>
+        <td>{{item.CTR}}</td>
+    </tr>
+    {% endfor %}
+</table>
